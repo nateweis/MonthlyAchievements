@@ -20,7 +20,6 @@ To Dos
 ------------
 MVC:
 . Connect data to DB
-. Add / Edit / Remove Tasks
 . Reset counters first day of month
 
 Other Tasks: 
@@ -35,6 +34,7 @@ Other Tasks:
 . A page for things to purchase
 . When something purchased it comes out of the total
 . Make app look nice
+. Make add button field required
 
 Completed Tasks
 ----------------
@@ -42,5 +42,6 @@ Completed Tasks
 . Display Total
 . Button to make total and counter go up and remove
 . Add Nav function to app
+. Add / Edit / Remove Tasks
 
 */

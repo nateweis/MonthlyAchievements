@@ -1,7 +1,12 @@
 export const achiev = ['$http', function($http){
     const ctrl = this;
+    let latestId = 2;
+
     this.includePath = 'partials/MainDisplay.html';
     this.total = 0;
+    this.newItem = {};
+    
+
     this.taskList = [
         {title: '6 Steps Exercise', pg : 2, 
         priority: 2, count: 0, current_progress: 0, max_progress: 2,
@@ -20,7 +25,8 @@ export const achiev = ['$http', function($http){
 
     this.navItems = [
         {item: 'Main Display', path: 'MainDisplay', display: false},
-        {item: 'Add Task', path: 'AddTask', display: true}
+        {item: 'Add Task', path: 'AddTask', display: true},
+        {item: 'EditTask', path: 'EditTask', display: true}
     ]
 
     this.updateNav = i => {
@@ -28,7 +34,6 @@ export const achiev = ['$http', function($http){
         for (let j = 0; j < ctrl.navItems.length; j++) {
             j == i ? ctrl.navItems[j].display = false : ctrl.navItems[j].display = true;
         }
-        console.log()
     }
 
     // ================================== //
@@ -47,7 +52,34 @@ export const achiev = ['$http', function($http){
         ctrl.taskList[i].count--
      }
 
+    // ================================== //
+    //          Add to Task List          //
+    // ================================== // 
 
+    this.addToTaskList = () => { 
+        latestId++
+        const nTask = ctrl.newItem
+
+        nTask.count = 0;
+        nTask.current_progress = 0;
+        nTask.id = latestId;
+        nTask.type = 'general';
+        nTask.status = 'ongoing';
+        nTask.date_created = Date.now();
+        nTask.date_updated = Date.now();
+
+        ctrl.taskList.push(nTask);
+
+        ctrl.newItem = {};
+     }
+
+    // ================================== //
+    //      Remove from Task List         //
+    // ================================== // 
+
+     this.removeTask = (i) => { 
+        ctrl.taskList.splice(1, i);
+      }
 
 
 }]

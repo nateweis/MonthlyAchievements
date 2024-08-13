@@ -1,3 +1,23 @@
 <div>
-    Holder Val for add task
+    <form novalidate>
+        <label for="title">Task</label>
+        <input type="text" name="title" ng-model="mac.newItem.title">
+
+        <label for="pg">Points Given</label>
+        <input type="number" name="pg" ng-model="mac.newItem.pg">
+
+        <label for="priority">Priority</label>
+        <input type="number" name="priority" ng-model="mac.newItem.priority">
+
+        <Label for="measurement">Task Mesured In</Label>
+        <input type="text" name="measurement" ng-model="mac.newItem.measurement">
+
+        <Label for="max_progress">Max Progress</Label>
+        <input type="number" name="max_progress" ng-model="mac.newItem.max_progress">
+
+        <input type="submit" value="submit" ng-click="mac.addToTaskList()">
+    </form>
+    <ul>
+        <li ng-repeat="task in mac.taskList">{{task.title}}</li>
+    </ul>
 </div>
