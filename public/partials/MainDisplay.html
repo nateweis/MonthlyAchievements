@@ -1,0 +1,25 @@
+<table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Task</th>
+        <th scope="col">Points Given</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Count</th>
+        <th scope="col">Pending Progress</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="task in mac.taskList">
+        <td>
+          <button type="button" class="btn btn-outline-danger btn-sm" ng-click="mac.removeFromTotal($index)">Remove Completion Check</button>
+          <button type="button" class="btn btn-outline-success btn-sm" ng-click="mac.addToTotal($index)">Add Completion Check</button>
+        </td>
+        <td>{{task.title}}</td>
+        <td>X{{task.pg}}</td>
+        <td>{{task.priority}}</td>
+        <td>{{task.count}}</td>
+        <td>{{task.current_progress}}/{{task.max_progress}} {{task.measurement}}</td>
+      </tr>
+    </tbody>
+  </table>
