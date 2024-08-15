@@ -1,6 +1,7 @@
-export const achiev = ['$http', function($http){
+export const achiev = ['$http', '$window', function($http, $window){
     const ctrl = this;
     let latestId = 2;
+    let user_id = 1
 
     this.includePath = 'partials/MainDisplay.html';
     this.total = 0;
@@ -18,6 +19,18 @@ export const achiev = ['$http', function($http){
        measurement: 'min', id: 2, type: 'general', status: 'ongoing',
        date_created: Date.now(), date_updated: Date.now()}
     ];
+    // ================================== //
+    //          Get Inital Tasks          //
+    // ================================== //
+
+    $window.onload = () => { 
+        $http({
+            method: 'GET',
+            url: '/tasks/' + user_id
+        })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
+     }
 
     // ================================== //
     //            Contole Nav             //
