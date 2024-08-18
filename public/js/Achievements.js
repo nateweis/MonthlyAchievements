@@ -5,7 +5,7 @@ export const achiev = ['$http', '$window', function($http, $window){
 
     this.includePath = 'partials/MainDisplay.html';
     this.total = 0;
-    this.newItem = {};
+    this.newItem = {pg: 0, priority: 0, max_progress: 0};
     
 
     this.taskList = [
@@ -80,10 +80,12 @@ export const achiev = ['$http', '$window', function($http, $window){
         nTask.status = 'ongoing';
         nTask.date_created = Date.now();
         nTask.date_updated = Date.now();
+        nTask.user_id = user_id;
 
         ctrl.taskList.push(nTask);
+        sendTaskToBackend(nTask)
 
-        ctrl.newItem = {};
+        ctrl.newItem = {pg: 0, priority: 0, max_progress: 0};
      }
 
     // ================================== //
@@ -93,6 +95,17 @@ export const achiev = ['$http', '$window', function($http, $window){
      this.removeTask = (i) => { 
         ctrl.taskList.splice(1, i);
       }
+
+    // ================================== //
+    //        Send Task to Backend        //
+    // ================================== //
+    const sendTaskToBackend = function(task){
+        $http({method: 'POST', url: '/tasks', data: task})
+        .then(data => {
+             console.log(data.data)
+        })
+        .catch(err => console.log(err))
+    }
 
 
 }]

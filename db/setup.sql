@@ -30,4 +30,3 @@ CREATE TABLE totals(
 );
 
 INSERT INTO totals(title, total_type, user_id, total, due_date) VALUES ('Naftali Weiss Task Total', 'All', 1, 0, now());
-
