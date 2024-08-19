@@ -4,6 +4,7 @@ export const achiev = ['$http', '$window', function($http, $window){
 
     this.includePath = 'partials/MainDisplay.html';
     this.total = {total: 0}
+    this.dueDate = new Date(2024, 5, 22);
     this.newItem = {pg: 0, priority: 0, max_progress: 0};
     
 
@@ -22,6 +23,11 @@ export const achiev = ['$http', '$window', function($http, $window){
             const d = res.data
             ctrl.taskList = d.tasks
             ctrl.total = d.totals[0]
+
+            if(this.dueDate < Date.now()) {
+                const d = new Date();
+                this.dueDate = new Date(d.getFullYear(), d.getMonth(), 1)
+            }
         })
         .catch(err => console.log(err))
      }
