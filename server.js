@@ -19,7 +19,6 @@ app.listen(port, () => console.log(`Hidee Hoe im on port ${port}`))
 To Dos
 ------------
 MVC:
-. Connect data to DB
 . Reset counters first day of month
 
 Other Tasks: 
@@ -35,6 +34,7 @@ Other Tasks:
 . When something purchased it comes out of the total
 . Make app look nice
 . Make add button field required
+. Make the front end updates await the db response
 
 Completed Tasks
 ----------------
@@ -43,5 +43,6 @@ Completed Tasks
 . Button to make total and counter go up and remove
 . Add Nav function to app
 . Add / Edit / Remove Tasks
+. Connect data to DB
 
 */

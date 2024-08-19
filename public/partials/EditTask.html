@@ -13,7 +13,7 @@
       <tr ng-repeat="task in mac.taskList">
         <td>
           <button type="button" class="btn btn-outline-danger btn-sm" ng-click="mac.removeTask($index)">Remove Task</button>
-          <!-- <button type="button" class="btn btn-outline-success btn-sm" ng-click="mac.addToTotal($index)">Edit Task</button> -->
+          <button type="button" class="btn btn-outline-success btn-sm" ng-click="mac.sendUpdateToBackend(task)">Save Update</button>
         </td>
         <td><input type="text" value="task.title" ng-model="task.title"></td>
         <td><input type="number" value="task.pg" ng-model="task.pg"></td>

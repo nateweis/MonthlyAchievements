@@ -1,24 +1,13 @@
 export const achiev = ['$http', '$window', function($http, $window){
     const ctrl = this;
-    let latestId = 2;
     let user_id = 1
 
     this.includePath = 'partials/MainDisplay.html';
-    this.total = 0;
+    this.total = {total: 0}
     this.newItem = {pg: 0, priority: 0, max_progress: 0};
     
 
-    this.taskList = [
-        {title: '6 Steps Exercise', pg : 2, 
-        priority: 2, count: 0, current_progress: 0, max_progress: 2,
-        measurement: 'excersizes', id: 1, type: 'general', status: 'ongoing',
-       date_created: Date.now(), date_updated: Date.now()},
-
-       {title: '1hr torah study', pg : 1, 
-       priority: 4, count: 0, current_progress: 0, max_progress: 60,
-       measurement: 'min', id: 2, type: 'general', status: 'ongoing',
-       date_created: Date.now(), date_updated: Date.now()}
-    ];
+    this.taskList = [{}];
     // ================================== //
     //          Get Inital Tasks          //
     // ================================== //
@@ -28,9 +17,16 @@ export const achiev = ['$http', '$window', function($http, $window){
             method: 'GET',
             url: '/tasks/' + user_id
         })
-        .then(res => console.log(res.data))
+        .then(res => {
+            console.log(res)
+            const d = res.data
+            ctrl.taskList = d.tasks
+            ctrl.total = d.totals[0]
+        })
         .catch(err => console.log(err))
      }
+
+     
 
     // ================================== //
     //            Contole Nav             //
@@ -55,14 +51,18 @@ export const achiev = ['$http', '$window', function($http, $window){
 
     this.addToTotal = (i) => {
         const currentTask = ctrl.taskList[i]
-        ctrl.total = ctrl.total + currentTask.pg
+        ctrl.total.total = ctrl.total.total + currentTask.pg
         ctrl.taskList[i].count++
+
+        updateTotal({total: ctrl.total, task: ctrl.taskList[i]})
     }
 
     this.removeFromTotal = (i) => { 
         const currentTask = ctrl.taskList[i]
-        ctrl.total = ctrl.total - currentTask.pg
+        ctrl.total.total = ctrl.total.total - currentTask.pg
         ctrl.taskList[i].count--
+
+        updateTotal({total: ctrl.total, task: ctrl.taskList[i]})
      }
 
     // ================================== //
@@ -70,12 +70,10 @@ export const achiev = ['$http', '$window', function($http, $window){
     // ================================== // 
 
     this.addToTaskList = () => { 
-        latestId++
         const nTask = ctrl.newItem
 
         nTask.count = 0;
         nTask.current_progress = 0;
-        nTask.id = latestId;
         nTask.type = 'general';
         nTask.status = 'ongoing';
         nTask.date_created = Date.now();
@@ -93,6 +91,7 @@ export const achiev = ['$http', '$window', function($http, $window){
     // ================================== // 
 
      this.removeTask = (i) => { 
+        deleteTask(ctrl.taskList[i].id)
         ctrl.taskList.splice(1, i);
       }
 
@@ -103,9 +102,30 @@ export const achiev = ['$http', '$window', function($http, $window){
         $http({method: 'POST', url: '/tasks', data: task})
         .then(data => {
              console.log(data.data)
+             ctrl.taskList[ctrl.taskList.length - 1].id = data.data.data.id
+             console.log(ctrl.taskList)
+
         })
         .catch(err => console.log(err))
     }
+
+    const updateTotal = function(data){
+        $http({method: 'PUT', url: '/tasks/total', data})
+        .then(data => {console.log(data.data)})
+        .catch(err => console.log(err))
+    }
+
+    this.sendUpdateToBackend = function(task){
+        $http({method: 'PUT', url: '/tasks', data: task})
+        .then(data => {console.log(data.data)})
+        .catch(err => console.log(err))
+    }
+
+    const deleteTask = (id) => { 
+        $http({method: 'DELETE', url: '/tasks/' + id})
+        .then(data => {console.log(data.data)})
+        .catch(err => console.log(err))
+     }
 
 
 }]
